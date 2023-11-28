@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calorie Calculator</title>
+  
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>ASE Web Application</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-scholar.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f1f1f1;
+          margin: 0;
+          padding: 0;
+        }
+    
+        h1 {
+          color: #333;
+          text-align: center;
+        }
+    
+        .container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+    
+        #foodList {
+          background-color: transparent;
+
+          padding: 20px;
+          border-radius: 5px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          height: 200px;
+          overflow-y: auto;
+          margin: 20px auto;
+        }
+    
+        #foodList label {
+          display: block;
+          margin-bottom: 10px;
+          color: white;
+          font-size: large;
+          font-family:cursive;
+          font-weight: bold;
+
+          
+        }
+    
+        #filterInput {
+          margin-bottom: 10px;
+          background-color: transparent;
+          border: #f1f1f1;
+          border-radius: 20px;
+          
+        }
+        ::placeholder{
+            color: white;
+        }
+    
+        button {
+          display: block;
+          margin: 20px auto;
+          padding: 10px 20px;
+          background-color: #6abf6c;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+    
+        #totalCalories {
+          text-align: center;
+          font-size: 18px;
+          font-weight: bold;
+          margin-top: 20px;
+          color: white;
+          font-family:cursive;
+        }
+
+        h1{
+            color: white;
+            
+        }
+        
+        .logot{
+            
+            padding-left: 50px;
+            margin-left: -50px;
+            height: 20%;
+            width: 20%;
+        }
+      </style>
+</head>
+<body>
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    
+                    <a href="index.html" class="logo">
+                      
+                        <h1>Foodvisor</h1>
+                        
+                    </a>
+                    <a href="index.html" class="logot">
+                      
+                      <img src="assets/images/logo.PNG" alt=""  >
+                      
+                  </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                      <li class="scroll-to-section"><a href="index.html" class="active">Home</a></li>
+                    
+                  </ul>   
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+    <!-- ***** Header Area End ***** -->
+
+    <div class="main-banner" id="top">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+            
+  <h1>Food Checklist</h1>
+  <br>
+
+  <div class="search-input">
+    <form id="search" action="#">
+      <input type="text" placeholder="search..." id="filterInput" name="searchKeyword" oninput="filterItems()" />
+      <i class="fa fa-search"></i>
+    </form>
+  </div>
+  
+
+  <div id="foodList">
+    <label><input type="checkbox" value="100" /> Apple</label><br />
+    <label><input type="checkbox" value="150" /> Banana</label><br />
+    <label><input type="checkbox" value="200" /> Pizza</label><br />
+    <label><input type="checkbox" value="50" /> Salad</label><br />
+    <label><input type="checkbox" value="80" /> Egg</label><br />
+    <label><input type="checkbox" value="337" /> Pasta</label><br />
+    <label><input type="checkbox" value="40" /> Olive oil</label><br />
+    <label><input type="checkbox" value="396" /> Candy</label><br />
+    <label><input type="checkbox" value="239" /> Bread</label><br />
+    <label><input type="checkbox" value="58" /> Milk</label><br />
+    <label><input type="checkbox" value="147" /> Fish</label><br />
+    <label><input type="checkbox" value="187" /> Meat </label><br />
+    <label><input type="checkbox" value="165" /> Poultry </label><br />
+  </div>
+
+  <button onclick="calculateCalories()">Calculate Calories</button>
+
+  <p id="totalCalories"></p>
+  
+  <script>
+    function calculateCalories() {
+      var checkboxes = document.querySelectorAll('#foodList input[type="checkbox"]');
+      var totalCalories = 0;
+      for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+          totalCalories += parseInt(checkboxes[i].value);
+        }
+      }
+      var totalCaloriesElement = document.getElementById('totalCalories');
+      totalCaloriesElement.textContent = 'Total Calories: ' + totalCalories;
+    }
+
+    function filterItems() {
+      var input = document.getElementById('filterInput').value.toLowerCase();
+      var labels = document.querySelectorAll('#foodList label');
+      
+      for (var i = 0; i < labels.length; i++) {
+        var label = labels[i];
+        var labelText = label.textContent.toLowerCase();
+        
+        if (labelText.includes(input)) {
+          label.style.display = 'block';
+        } else {
+          label.style.display = 'none';
+        }
+      }
+    }
+  </script>
+</body>
+</html>
